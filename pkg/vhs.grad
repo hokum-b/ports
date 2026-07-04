@@ -1,0 +1,24 @@
+pkgname=vhs
+pkgver=0.11.0
+pkgdesc="A tool for recording terminal GIFs and demos"
+source_tarball="https://github.com/charmbracelet/vhs/archive/refs/tags/v0.11.0.tar.gz"
+sha256_tarball="08b8502989fe7e9626c02938f3fc512c2a4ba21f839f455d20d7eb1da7bc39f"
+git_url="https://github.com/charmbracelet/vhs.git"
+
+register_dep "debian" --build golang-go ffmpeg ttyd
+register_dep "arch" --build go ffmpeg ttyd
+register_dep "alpine" --build go ffmpeg ttyd
+register_dep "fedora" --build golang ffmpeg ttyd
+register_dep "debian" ffmpeg ttyd
+register_dep "arch" ffmpeg ttyd
+register_dep "alpine" ffmpeg ttyd
+register_dep "fedora" ffmpeg ttyd
+
+build() {
+    cd "${build_dir}"
+    go build -o vhs .
+}
+
+package() {
+    install_binary "${build_dir}/vhs"
+}
