@@ -1,0 +1,21 @@
+pkgname=starship
+pkgver=1.22.1
+pkgdesc="The minimal, blazing-fast, and infinitely customizable prompt for any shell."
+source_tarball="https://github.com/starship/starship/archive/refs/tags/v1.22.1.tar.gz"
+sha256_tarball="5434a3d1ca16987a1dd30146c36aaa4371dbe1c7f1a7995c0cf12ab3eb9326d7"
+git_url="https://github.com/starship/starship.git"
+
+register_dep "debian" --build cargo rustc cmake libssl-dev pkg-config
+register_dep "arch" --build rust cmake openssl pkgconf
+register_dep "alpine" --build cargo rust cmake openssl-dev pkgconfig
+register_dep "fedora" --build cargo rustc cmake openssl-devel pkgconf-pkg-config
+register_dep "void" --build cargo cmake openssl-devel pkg-config
+
+build() {
+    cd "${build_dir}"
+    cargo build --release --locked
+}
+
+package() {
+    install_binary "${build_dir}/target/release/starship"
+}
