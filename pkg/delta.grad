@@ -1,0 +1,21 @@
+pkgname=delta
+pkgver=0.18.2
+pkgdesc="A syntax-highlighting pager for git, diff, and grep output."
+source_tarball="https://github.com/dandavison/delta/archive/refs/tags/0.18.2.tar.gz"
+sha256_tarball="64717c3b3335b44a252b8e99713e080cbf7944308b96252bc175317b10004f02"
+git_url="https://github.com/dandavison/delta.git"
+
+register_dep "debian" --build cargo rustc
+register_dep "arch" --build rust
+register_dep "alpine" --build cargo rust
+register_dep "fedora" --build cargo rustc
+register_dep "void" --build cargo
+
+build() {
+    cd "${build_dir}"
+    cargo build --release --locked
+}
+
+package() {
+    install_binary "${build_dir}/target/release/delta"
+}
