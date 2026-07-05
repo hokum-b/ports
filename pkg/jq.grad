@@ -1,0 +1,23 @@
+pkgname=jq
+pkgver=1.7.1
+pkgdesc="Command-line JSON processor."
+source_tarball="https://github.com/jqlang/jq/archive/refs/tags/jq-1.7.1.tar.gz"
+sha256_tarball="fc75b1824aba7a954ef0886371d951c3bf4b6e0a921d1aefc553f309702d6ed1"
+git_url="https://github.com/jqlang/jq.git"
+
+register_dep "debian" --build make gcc autoconf libtool
+register_dep "arch" --build make gcc autoconf libtool
+register_dep "alpine" --build make gcc autoconf libtool
+register_dep "fedora" --build make gcc autoconf libtool
+register_dep "void" --build make gcc autoconf libtool
+
+build() {
+    cd "${build_dir}"
+    autoreconf -fi
+    ./configure --with-oniguruma=builtin
+    make -j$(nproc)
+}
+
+package() {
+    install_binary "${build_dir}/jq"
+}
