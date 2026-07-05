@@ -1,0 +1,21 @@
+pkgname=sd
+pkgver=1.0.0
+pkgdesc="Intuitive find & replace CLI (sed alternative)."
+source_tarball="https://github.com/chmln/sd/archive/refs/tags/v1.0.0.tar.gz"
+sha256_tarball="2adc1dec0d2c63cbffa94204b212926f2735a59753494fca72c3cfe4001d472f"
+git_url="https://github.com/chmln/sd.git"
+
+register_dep "debian" --build cargo rustc
+register_dep "arch" --build rust
+register_dep "alpine" --build cargo rust
+register_dep "fedora" --build cargo rustc
+register_dep "void" --build cargo
+
+build() {
+    cd "${build_dir}"
+    cargo build --release --locked
+}
+
+package() {
+    install_binary "${build_dir}/target/release/sd"
+}
