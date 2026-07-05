@@ -1,0 +1,21 @@
+pkgname=duf
+pkgver=0.8.1
+pkgdesc="Disk Usage/Free Utility."
+source_tarball="https://github.com/muesli/duf/archive/refs/tags/v0.8.1.tar.gz"
+sha256_tarball="ebc3880540b25186ace220c09af859f867251f4ecaef435525a141d98d71a27a"
+git_url="https://github.com/muesli/duf.git"
+
+register_dep "debian" --build golang-go
+register_dep "arch" --build go
+register_dep "alpine" --build go
+register_dep "fedora" --build golang
+register_dep "void" --build go
+
+build() {
+    cd "${build_dir}"
+    go build -o duf .
+}
+
+package() {
+    install_binary "${build_dir}/duf"
+}
